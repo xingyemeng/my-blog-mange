@@ -14,3 +14,11 @@ export const getToken = () => {
         return false
     }
 }
+export const getMenuByRoute = (list, access) => {
+    let res = []
+    list.forEach(item => {
+        if(item.meta && !item.meta.hideMenu) {
+
+        }
+    })
+}

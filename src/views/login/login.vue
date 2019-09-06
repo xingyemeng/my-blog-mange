@@ -46,6 +46,7 @@
                 this.handleLogin({user_name: this.user_name, password: this.password}).then(res => {
                     if(res.status === 0) {
                         alert(res.msg)
+                        this.$router.push({name: 'home'})
                     } else {
                         alert(res.msg)
                     }

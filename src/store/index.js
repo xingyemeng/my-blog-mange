@@ -1,17 +1,37 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {login} from '@/api/user'
-import {setToken, getToken} from "../libs/utils";
+import routes from '@/router/routes'
+import {login, getUserInfo, logOut} from '../api/user'
+import {setToken, getToken, getMenuByRoute} from '../libs/utils';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        token: getToken()
+        token: getToken(),
+        userName: '',
+        avatarImgPath: '',
+        userId: '',
+        access: ''
+    },
+    getters: {
+        menuList: (state) => getMenuByRoute(routes, state.access)
     },
     mutations: {
+        setAvatar (state, avatarPath) {
+            state.avatarImgPath = 'http://localhost:8001/' + avatarPath
+        },
+        setUserId (state, id) {
+            state.userId = id
+        },
         setToken(state, token) {
             setToken(token)
             state.token = token
+        },
+        setUserName(state, name) {
+            state.userName = name
+        },
+        setAccess(state, access) {
+            state.access = access
         }
     },
     actions: {
@@ -21,9 +41,31 @@ export default new Vuex.Store({
                     const data = res.data
                     commit('setToken', data.token)
                     resolve(data)
+                }).catch(err => {
+                    reject(err)
                 })
             })
-
+        },
+        handleGetUserInfo({commit, state}) {
+            return new Promise((resolve, reject) => {
+                getUserInfo(state.token).then(res => {
+                    const data = res.data.info
+                    commit("setAvatar", data.avatarImgPath)
+                    commit("setUserName", data.userName)
+                    commit("setUserId", data.userId)
+                    commit("setAccess", data.access)
+                    resolve(res.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        handleLogout({commit, state}) {
+            return new Promise((resolve, reject) => {
+                setToken('')
+                commit('setToken', '')
+                resolve()
+            })
         }
     }
 })

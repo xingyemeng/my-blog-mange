@@ -1,3 +1,4 @@
+import Main from '@/components/main'
 export default [
     {
         path: '/login',
@@ -6,7 +7,37 @@ export default [
     },
     {
         path: '/',
-        name: 'home',
-        component: () => import('@/views/Home.vue')
+        redirect: '/home',
+        component: Main,
+        children: [
+            {
+                path: '/home',
+                name: 'home',
+                component: () => import('@/views/Home.vue')
+            }
+        ]
+    },
+    {
+        path: '/artical',
+        component: Main,
+        meta: {
+            title: '文章管理'
+        },
+        children: [
+            {
+                path: '/view',
+                component: Main,
+                meta: {
+                    title: '文章列表'
+                }
+            },
+            {
+                path: '/updata',
+                component: Main,
+                meta: {
+                    title: '文章修改'
+                }
+            }
+        ]
     }
 ]
