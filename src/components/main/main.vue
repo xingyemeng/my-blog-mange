@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '20px', minHeight: '260px'}">
                     <router-view></router-view>
                 </Content>
             </Layout>
@@ -92,6 +92,7 @@
         border-radius: 4px;
         overflow: hidden;
         height: 100%;
+        min-width: 1018px;
         .ivu-layout-sider{
             img{
                 display: block;margin: 10px auto;

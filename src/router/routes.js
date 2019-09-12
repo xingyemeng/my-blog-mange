@@ -18,21 +18,28 @@ export default [
         ]
     },
     {
-        path: '/artical',
+        path: '/article',
         component: Main,
         meta: {
             title: '文章管理'
         },
         children: [
             {
-                path: '/view',
+                path: 'post',
+                component: () => import('@/views/arctical/post.vue'),
+                meta: {
+                    title: '文章发布'
+                }
+            },
+            {
+                path: 'view',
                 component: Main,
                 meta: {
                     title: '文章列表'
                 }
             },
             {
-                path: '/updata',
+                path: 'updata',
                 component: Main,
                 meta: {
                     title: '文章修改'

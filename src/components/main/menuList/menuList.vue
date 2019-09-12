@@ -7,7 +7,7 @@
                         <Icon type="ios-analytics" />
                         {{ itemObj.name }}
                     </template>
-                    <MenuItem :name="'1-'+ (index + 1)" v-for="(item, index) in itemObj.children" :key="index">{{ item }}</MenuItem>
+                    <MenuItem :name="'1-'+ (index + 1)" v-for="(item, index) in itemObj.children" :key="index" ><router-link tag="span" :to="'/article/'+item.path">{{ item.name }}</router-link></MenuItem>
                 </Submenu>
                 <MenuItem v-else :name="index + 1" :key="index"><Icon type="ios-analytics" />{{ itemObj.name }}</MenuItem>
             </template>
@@ -40,12 +40,13 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         name: "menuList",
         props: ['collapsed'],
         data() {
             return {
-                menuList: [
+                /*menuList: [
                     {
                         name: '用户管理'
                     },
@@ -73,10 +74,11 @@
                         name: '评论审核',
                         children: ['item1', 'item2', 'item3']
                     }
-                ]
+                ]*/
             }
         },
         computed: {
+            ...mapGetters(['menuList']),
             menuitemClasses () {
                 return [
                     'menu-item',

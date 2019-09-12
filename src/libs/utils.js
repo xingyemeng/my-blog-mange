@@ -14,11 +14,30 @@ export const getToken = () => {
         return false
     }
 }
+function accessPermission(item, access) {
+    if(item.meta.access){
+        if(access.include(item.meta.access)) {
+            return true
+        } else {
+            return false
+        }
+    }
+    return true
+}
 export const getMenuByRoute = (list, access) => {
     let res = []
     list.forEach(item => {
-        if(item.meta && !item.meta.hideMenu) {
-
+        if(item.meta && !item.meta.hideMenu && accessPermission(item, access)) {
+            let obj = {
+                name: item.meta.title,
+                icon: item.meta.icon ?  item.meta.icon : '',
+                path: item.path
+            }
+            if(item.children) {
+                obj.children = getMenuByRoute(item.children, access)
+            }
+            res.push(obj)
         }
     })
+    return res
 }
