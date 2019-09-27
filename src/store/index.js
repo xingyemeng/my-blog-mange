@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import routes from '@/router/routes'
 import {login, getUserInfo, logOut} from '../api/user'
-import {setToken, getToken, getMenuByRoute} from '../libs/utils';
+import {setToken, getToken, getMenuByRoute, getBreadFromRoute} from '../libs/utils';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -11,7 +11,13 @@ export default new Vuex.Store({
         userName: '',
         avatarImgPath: '',
         userId: '',
-        access: ''
+        access: '',
+        breadcrumb: [],
+        homeRoute: {
+            link: '/home',
+            name: '首页'
+        },
+        rloeList: []  // 权限管理中的角色列表
     },
     getters: {
         menuList: (state) => getMenuByRoute(routes, state.access)
@@ -32,6 +38,9 @@ export default new Vuex.Store({
         },
         setAccess(state, access) {
             state.access = access
+        },
+        setBreadcrumb(state, route) {
+            state.breadcrumb = getBreadFromRoute(route, state.homeRoute)
         }
     },
     actions: {
@@ -66,6 +75,9 @@ export default new Vuex.Store({
                 commit('setToken', '')
                 resolve()
             })
+        },
+        handleGetRoleList() {
+
         }
     }
 })

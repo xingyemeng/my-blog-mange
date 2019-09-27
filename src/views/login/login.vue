@@ -22,8 +22,13 @@
 
 <script>
     import {mapActions} from 'vuex'
+    import { Input, Button } from 'iview';
     export default {
         name: "login",
+        components: {
+            Input,
+            Button
+        },
         data() {
             return {
                 user_name: '',

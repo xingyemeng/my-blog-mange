@@ -12,23 +12,44 @@
         <div class="tips">
             <slot></slot>
         </div>
-        <div class="categoryList">
-            <ul>
-                <li>
-                    <check-box v-model="choosedCaregroies"></check-box>
-                </li>
-            </ul>
+        <div v-if="showCategory" class="categoryList">
+            <check-box-group v-model="arr">
+                <div class="categoryItem" v-for="(category, index) in categoryList" :key="index">
+                    <check-box  :label="category"></check-box>
+                </div>
+            </check-box-group>
         </div>
     </div>
 </template>
 
 <script>
     import CheckBox from '@/components/common/CheckBox'
+    import CheckBoxGroup from '@/components/common/CheckBoxGroup'
+    import { Icon, Checkbox, CheckboxGroup } from 'iview'
     export default {
+        name: 'checkbox',
         components: {
-            CheckBox
+            CheckBox,
+            Icon,
+            CheckboxGroup,
+            Checkbox,
+            CheckBoxGroup
         },
-        props: ['btn-name'],
+        props: {
+            'btn-name': {
+                type: String
+            },
+            showCategory: {
+                type: Boolean,
+                default: false
+            },
+            historyList: {
+                type: Array,
+                default() {
+                    return []
+                }
+            }
+        },
         data() {
             return {
                 arcTitle: '', // 文章标题
@@ -37,8 +58,10 @@
                 maxTags: 5,  // 最大标签数
                 checkAllGroup: [],
                 categoryList: ['php', 'nodejs', 'javascript'],
-                choosedCaregroies: [],
-                single: false
+                choosedCategroies: [],
+                single: false,
+                lovingVue: true,
+                arr: this.historyList
             }
         },
         methods: {
@@ -65,23 +88,36 @@
                 }
             },
             addTag(event) {
-                // 添加标签到数组
+                // 当span失去焦点时触发，添加标签到数组
                 if(this.isAddTag) {
-                    if(event.target.innerText !== ''){
-                        this.tags.push(event.target.innerText.substr(0,30))
-                        this.isAddTag = false
+                    let newTag = event.target.innerText
+                    if(newTag !== ''){
+                        if(this.tags.indexOf(newTag) >= 0) {
+                            this.tags.splice(this.tags.indexOf(''), 1)
+                        } else {
+                            this.tags.push(newTag.substr(0,30))
+                            this.isAddTag = false
+                        }
+
                     }
                     if(this.tags.indexOf('') > -1) {
                         this.tags.splice(this.tags.indexOf(''), 1)
                     }
                 } else {
-                    // 这是修改标签后
+                    // 这是修改标签后,要检查去重
 
                 }
 
             },
             removeTag(index) {
                 this.tags.splice(index, 1)
+            }
+        },
+        watch: {
+            arr(val) {
+                if(this.showCategory) {
+                    this.tags = val
+                }
             }
         }
     }
@@ -143,16 +179,20 @@
             background: #fff;
             padding: 15px 20px;
             margin-top: 20px;
-            ul{
-                &:after{
-                    content: '';
-                    display: block;
-                    clear: both;
-                }
-                li{
-                    width: 200px;
-                    float: left;
-                    list-style: none;
+            &:after{
+                content: '';
+                display: block;
+                clear: both;
+            }
+            .categoryItem{
+                width: 200px;
+                float: left;
+                list-style: none;
+                height: 30px;
+                line-height: 30px;
+                font-size: 14px;
+                .categoryTxt{
+                    margin-left: 8px;
                 }
             }
         }

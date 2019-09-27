@@ -14,10 +14,15 @@
             </div>
             <div class="conf_group">
                 <label for="">分类专栏：</label>
-                <add-tag btn-name="添加新分类">
+                <add-tag btn-name="添加新分类" :showCategory="true" :historyList="categoryList">
                     <p>最多添加3个标签</p>
                 </add-tag>
             </div>
+        </div>
+        <div class="footer">
+            <Button type="error" class="btn_style btn_publish" ghost @click="blogPublish">发布博客</Button>
+            <Button type="error" class="btn_style btn_publish" ghost>保存为草稿</Button>
+            <Button class="btn_style btn_back">返回</Button>
         </div>
     </div>
 </template>
@@ -25,21 +30,30 @@
 <script>
     import E from 'wangeditor'
     import AddTag from '../../components/add-tag'
+    import { Button } from 'iview'
     export default {
         components: {
-            AddTag
+            AddTag,
+            Button
         },
         data() {
             return {
-                btnName: '添加标签'
+                editor: Object,
+                btnName: '添加标签',
+                categoryList: []
             }
         },
         methods: {
-
+            blogPublish() {
+                console.log(this.editor.txt.html())
+            }
         },
         mounted() {
-            let editor = new E('#editor')
-            editor.create()
+            this.editor = new E('#editor')
+            this.editor.create()
+        },
+        created() {
+            console.log(this.$route.matched)
         }
     }
 </script>
@@ -78,5 +92,23 @@
             }
         }
     }
-
+    .footer{
+        padding: 10px 0 50px 50px;
+        .btn_style{
+            margin-left: 20px;
+        }
+        .btn_publish{
+            &:hover{
+                background: #C92027;
+                color: #ffffff;
+            }
+        }
+        .btn_back{
+            &:hover{
+                background: #6c757d;
+                color: #ffffff;
+                border: none;
+            }
+        }
+    }
 </style>

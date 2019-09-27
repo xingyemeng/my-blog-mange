@@ -7,7 +7,7 @@
                         <Icon type="ios-analytics" />
                         {{ itemObj.name }}
                     </template>
-                    <MenuItem :name="'1-'+ (index + 1)" v-for="(item, index) in itemObj.children" :key="index" ><router-link tag="span" :to="'/article/'+item.path">{{ item.name }}</router-link></MenuItem>
+                    <MenuItem :name="(index + 1) + '-' + (indexChild + 1)" v-for="(item, indexChild) in itemObj.children" :key="indexChild" ><router-link tag="span" :to="{name: item.path}">{{ item.name }}</router-link></MenuItem>
                 </Submenu>
                 <MenuItem v-else :name="index + 1" :key="index"><Icon type="ios-analytics" />{{ itemObj.name }}</MenuItem>
             </template>
@@ -20,7 +20,7 @@
                             <Icon type="ios-navigate" style="font-size: 20px;"></Icon>
                         </a>
                         <DropdownMenu slot="list">
-                            <DropdownItem v-for="(item, index) in obj.children" :key="index">{{ item }}</DropdownItem>
+                            <DropdownItem v-for="(item, index) in obj.children" :key="index"><router-link tag="span" :to="'/article/'+item.path">{{ item.name }}</router-link></DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </template>
@@ -41,8 +41,10 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import {Menu, Submenu, MenuItem, Dropdown, DropdownMenu, DropdownItem, Tooltip, Icon } from 'iview'
     export default {
         name: "menuList",
+        components: {Menu, Submenu, MenuItem, Dropdown, DropdownMenu, DropdownItem, Tooltip, Icon},
         props: ['collapsed'],
         data() {
             return {

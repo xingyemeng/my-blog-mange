@@ -68,7 +68,11 @@
   </div>
 </template>
 <script>
+  import { Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge, MenuGroup, Menu, Submenu, MenuItem } from 'iview';
   export default {
+    components: {
+      Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge, MenuGroup, Menu, Submenu, MenuItem
+    },
     data () {
       return {
         isCollapsed: false
