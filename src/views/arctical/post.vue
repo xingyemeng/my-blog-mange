@@ -30,7 +30,7 @@
 <script>
     import E from 'wangeditor'
     import AddTag from '../../components/add-tag'
-    import { Button } from 'iview'
+    import { Button } from 'view-design'
     export default {
         components: {
             AddTag,

@@ -22,7 +22,7 @@
 
 <script>
     import {mapActions} from 'vuex'
-    import { Input, Button } from 'iview';
+    import { Input, Button } from 'view-design';
     export default {
         name: "login",
         components: {

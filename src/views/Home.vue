@@ -7,6 +7,7 @@
             <template slot="title">
               <Icon type="ios-analytics" />
               Navigation One
+
             </template>
             <MenuGroup title="Item 1">
               <MenuItem name="1-1">Option 1</MenuItem>
@@ -68,7 +69,7 @@
   </div>
 </template>
 <script>
-  import { Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge, MenuGroup, Menu, Submenu, MenuItem } from 'iview';
+  import { Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge, MenuGroup, Menu, Submenu, MenuItem } from 'view-design';
   export default {
     components: {
       Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge, MenuGroup, Menu, Submenu, MenuItem
