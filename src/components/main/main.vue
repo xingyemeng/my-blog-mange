@@ -17,7 +17,7 @@
                     </Breadcrumb>
                     <div class="custom_con">
                         <div class="user_avatar">
-                            <Dropdown  @on-click="handleClick">
+                            <Dropdown @on-click="handleClick">
                                 <a href="javascript:void(0)">
                                     <Badge dot style="line-height: 32px;">
                                         <span class="avatar_box">
@@ -74,6 +74,7 @@
             },
             logout() {
                 this.handleLogout().then(res => {
+                    console.log(res)
                     this.$router.push({name: 'login'})
                 })
             },

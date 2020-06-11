@@ -16,7 +16,7 @@ export const getToken = () => {
 }
 function accessPermission(item, access) {
     if(item.meta.access){
-        if(access.include(item.meta.access)) {
+        if(access.includes(...item.meta.access)) {
             return true
         } else {
             return false

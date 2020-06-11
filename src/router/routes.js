@@ -60,7 +60,8 @@ export default [
         path: '/auth',
         component: Main,
         meta: {
-            title: '权限管理'
+            title: '权限管理',
+            access: ['admin']
         },
         children: [
             {
