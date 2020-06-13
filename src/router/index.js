@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Store from '@/store'
 import routes from './routes';
+import config from  '@/config'
 import {getToken, setToken} from "../libs/utils";
 
 Vue.use(Router)
@@ -23,7 +24,7 @@ router.beforeEach((to, from, next) => {
     }else  if(token && to.name === LOGIN_NAME) {
         // 如果已登陆且跳转的登录页
         next({
-            name: 'home'
+            name: config.homeName
         })
     } else if(token && to.name !== LOGIN_NAME) {
         // 如果已登陆且跳转的非登录页

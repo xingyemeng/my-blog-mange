@@ -10,13 +10,14 @@
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
                     <Breadcrumb class="bread_crumb">
-                        <BreadcrumbItem to="/">Home</BreadcrumbItem>
-                        <BreadcrumbItem to="/components/breadcrumb">Components</BreadcrumbItem>
-                        <BreadcrumbItem>Breadcrumb</BreadcrumbItem>
+                        <BreadcrumbItem v-for="(item, index) in breadcrumb" :key="index" :to="item.link">{{item.name}}</BreadcrumbItem>
+                        <!--<BreadcrumbItem to="/">Home</BreadcrumbItem>-->
+                        <!--<BreadcrumbItem to="/components/breadcrumb">Components</BreadcrumbItem>-->
+                        <!--<BreadcrumbItem>Breadcrumb</BreadcrumbItem>-->
                     </Breadcrumb>
                     <div class="custom_con">
                         <div class="user_avatar">
-                            <Dropdown  @on-click="handleClick">
+                            <Dropdown @on-click="handleClick">
                                 <a href="javascript:void(0)">
                                     <Badge dot style="line-height: 32px;">
                                         <span class="avatar_box">
@@ -35,7 +36,7 @@
                         </div>
                     </div>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '20px', minHeight: '260px'}">
                     <router-view></router-view>
                 </Content>
             </Layout>
@@ -43,11 +44,13 @@
     </div>
 </template>
 <script>
-    import { mapState, mapActions } from 'vuex'
+    import { mapState, mapActions, mapMutations } from 'vuex'
+    import { Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge } from 'iview';
     import MenuList from './menuList'
     export default {
         components: {
-            MenuList
+            MenuList,
+            Layout, Sider, Header, Breadcrumb, BreadcrumbItem, Content, Dropdown, DropdownMenu, DropdownItem, Icon, Badge
         },
         data () {
             return {
@@ -55,7 +58,7 @@
             }
         },
         computed: {
-            ...mapState(['userName', 'avatarImgPath']),
+            ...mapState(['userName', 'avatarImgPath', "breadcrumb"]),
             rotateIcon () {
                 return [
                     'menu-icon',
@@ -65,11 +68,13 @@
         },
         methods: {
             ...mapActions(['handleLogout']),
+            ...mapMutations(["setBreadcrumb"]),
             collapsedSider () {
                 this.isCollapsed = !this.isCollapsed;
             },
             logout() {
                 this.handleLogout().then(res => {
+                    console.log(res)
                     this.$router.push({name: 'login'})
                 })
             },
@@ -81,6 +86,15 @@
                         break;
                 }
             }
+        },
+        watch: {
+            '$route'(newRoute) {
+                console.log(999)
+                this.setBreadcrumb(newRoute)
+            }
+        },
+        mounted() {
+            this.setBreadcrumb(this.$route)
         }
     }
 </script>
@@ -92,6 +106,7 @@
         border-radius: 4px;
         overflow: hidden;
         height: 100%;
+        min-width: 1018px;
         .ivu-layout-sider{
             img{
                 display: block;margin: 10px auto;
