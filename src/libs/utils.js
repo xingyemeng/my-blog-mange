@@ -18,7 +18,12 @@ export const getMenuByRoute = (list, access) => {
     let res = []
     list.forEach(item => {
         if(item.meta && !item.meta.hideMenu) {
-
+            let obj = {
+                name: item.meta.title,
+                icon: item.meta.icon ? item.meta.icon : ''
+            }
+            res.push(obj)
         }
     })
+    return res
 }
