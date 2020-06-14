@@ -10,3 +10,7 @@ export const login = ({user_name, password}) => {
 export const getUserInfo = (token) => {
     return instance.post('admin/getUserInfo', {token: token})
 }
+
+export const addUserRoles = (token) => {
+    return instance.post('auth/addUserRoles', {token})
+}

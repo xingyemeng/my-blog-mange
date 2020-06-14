@@ -75,7 +75,7 @@ export default [
             {
                 path: 'userMange',
                 name: 'userMange',
-                component: Main,
+                component: () => import('@/views/auth/UserMange'),
                 meta: {
                     title: '用户管理'
                 }
