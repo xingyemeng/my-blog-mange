@@ -12,6 +12,8 @@
 
 <script>
 import { Button, Table } from 'view-design'
+import { mapState } from 'vuex'
+import { getUserRolesDetail } from '@/api/user'
 export default {
     name: "RoleMange",
     components: {
@@ -64,17 +66,25 @@ export default {
             ]
         }
     },
-        methods: {
-            show (index) {
-                this.$Modal.info({
-                    title: 'User Info',
-                    content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-                })
-            },
-            remove (index) {
-                this.data6.splice(index, 1);
-            }
+    computed: {
+        ...mapState(['token'])
+    },
+    mounted() {
+        getUserRolesDetail(this.token).then(res => {
+            console.log(res)
+        })
+    },
+    methods: {
+        show (index) {
+            this.$Modal.info({
+                title: 'User Info',
+                content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
+            })
+        },
+        remove (index) {
+            this.data6.splice(index, 1);
         }
+    }
 }
 </script>
 

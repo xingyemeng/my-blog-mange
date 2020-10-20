@@ -1,4 +1,12 @@
 import instance from '@/libs/axios'
+/**
+ * 统一拦截响应报文
+*/
+instance.interceptors.response.use(function(response) {
+    if(response.status === 200) {
+        return response.data
+    }
+})
 
 export const login = ({user_name, password}) => {
     const data = {
@@ -13,4 +21,8 @@ export const getUserInfo = (token) => {
 
 export const addUserRoles = (token) => {
     return instance.post('auth/addUserRoles', {token})
+}
+
+export const getUserRolesDetail = (token) => {
+    return instance.post('auth/userRolesDetail', {token})
 }

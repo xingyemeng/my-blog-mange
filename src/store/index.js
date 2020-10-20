@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import routes from '@/router/routes'
-import {login, getUserInfo, logOut} from '../api/user'
+import {login, getUserInfo} from '../api/user'
 import {setToken, getToken, getMenuByRoute, getBreadFromRoute} from '../libs/utils';
 
 Vue.use(Vuex);
@@ -38,6 +38,7 @@ export default new Vuex.Store({
         },
         setAccess(state, access) {
             state.access = access
+            state.rloeList = access
         },
         setBreadcrumb(state, route) {
             state.breadcrumb = getBreadFromRoute(route, state.homeRoute)
@@ -47,7 +48,7 @@ export default new Vuex.Store({
         handleLogin({commit}, {user_name, password}) {
             return new Promise((resolve, reject) => {
                 login({user_name, password}).then(res => {
-                    const data = res.data
+                    const data = res
                     commit('setToken', data.token)
                     resolve(data)
                 }).catch(err => {
@@ -58,19 +59,19 @@ export default new Vuex.Store({
         handleGetUserInfo({commit, state}) {
             return new Promise((resolve, reject) => {
                 getUserInfo(state.token).then(res => {
-                    const data = res.data.info
+                    const data = res.info
                     commit("setAvatar", data.avatarImgPath)
                     commit("setUserName", data.userName)
                     commit("setUserId", data.userId)
                     commit("setAccess", data.access)
-                    resolve(res.data)
+                    resolve(res)
                 }).catch(err => {
                     reject(err)
                 })
             })
         },
-        handleLogout({commit, state}) {
-            return new Promise((resolve, reject) => {
+        handleLogout({commit}) {
+            return new Promise((resolve) => {
                 setToken('')
                 commit('setToken', '')
                 resolve()
